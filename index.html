@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>부산 2030 그림모임 - 레이어스(Layers)</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome for Icons (유지하지만 둥글고 귀여운 느낌으로 재구성) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts: 둥글고 귀여운 폰트(Jua)와 손글씨 느낌의 본문 폰트(Gowun Dodum) -->
+    <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&family=Jua&display=swap" rel="stylesheet">
+    <style>
+        /* 기본 폰트 및 배경색 설정 */
+        body {
+            font-family: 'Gowun Dodum', sans-serif;
+            background-color: #FDFBF7; /* 레퍼런스의 따뜻한 크림색 배경 */
+            color: #4A3A31; /* 진한 갈색 텍스트로 부드러운 느낌 부여 */
+            scroll-behavior: smooth;
+            overflow-x: hidden;
+        }
+
+        /* 제목용 귀여운 폰트 */
+        .font-title {
+            font-family: 'Jua', sans-serif;
+        }
+
+        /* 손그림/스티커 느낌의 UI 요소 디자인 (두꺼운 테두리와 어긋난 그림자) */
+        .doodle-border {
+            border: 3px solid #4A3A31;
+            box-shadow: 4px 4px 0px #4A3A31;
+        }
+
+        /* 버튼 호버 액션 (누르는 듯한 물리적 느낌) */
+        .doodle-button {
+            border: 3px solid #4A3A31;
+            box-shadow: 4px 4px 0px #4A3A31;
+            transition: all 0.2s ease-in-out;
+        }
+        .doodle-button:hover {
+            transform: translate(2px, 2px);
+            box-shadow: 2px 2px 0px #4A3A31;
+        }
+
+        /* 스티커 애니메이션 효과 */
+        .sticker {
+            position: absolute;
+            transition: transform 0.3s ease;
+        }
+        .sticker:hover {
+            transform: scale(1.1) rotate(10deg);
+        }
+        .float-animation {
+            animation: float 4s ease-in-out infinite;
+        }
+        @keyframes float {
+            0% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-10px) rotate(5deg); }
+            100% { transform: translateY(0px) rotate(0deg); }
+        }
+
+        /* 공지사항 노트 줄무늬 배경 */
+        .notebook-paper {
+            background-color: #fff;
+            background-image: repeating-linear-gradient(transparent, transparent 31px, #E5E7EB 31px, #E5E7EB 32px);
+            line-height: 32px;
+        }
+
+        /* 텍스트 형광펜 하이라이트 효과 */
+        .highlight-text {
+            background: linear-gradient(transparent 60%, #FFD166 60%);
+            padding: 0 4px;
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <!-- Navigation Bar -->
+    <nav class="fixed w-full bg-[#FDFBF7]/90 backdrop-blur-sm z-50 border-b-3 border-[#4A3A31] border-b-4">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20">
+                <div class="flex-shrink-0 flex items-center gap-2 cursor-pointer" onclick="window.scrollTo(0,0)">
+                    <div class="w-10 h-10 bg-[#FF7A00] rounded-full doodle-border flex items-center justify-center text-white text-xl">
+                        🎨
+                    </div>
+                    <span class="text-3xl font-title text-[#4A3A31] tracking-wide mt-1">레이어스</span>
+                </div>
+                <div class="hidden md:flex space-x-6 items-center">
+                    <a href="#about" class="text-[#4A3A31] hover:text-[#FF7A00] font-bold text-lg transition font-title">모임소개</a>
+                    <a href="#info" class="text-[#4A3A31] hover:text-[#FF7A00] font-bold text-lg transition font-title">정모안내</a>
+                    <a href="#rules" class="text-[#4A3A31] hover:text-[#FF7A00] font-bold text-lg transition font-title">가입조건 및 회칙</a>
+                    <a href="#contact" class="bg-[#FF7A00] text-white px-5 py-2 rounded-full font-title text-lg doodle-button ml-2">가입문의</a>
+                </div>
+                <div class="md:hidden flex items-center">
+                    <button class="text-[#4A3A31] hover:text-[#FF7A00] focus:outline-none">
+                        <i class="fas fa-bars text-3xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="relative pt-32 pb-20 md:pt-48 md:pb-32 overflow-hidden">
+        <!-- 배경 스티커 장식들 -->
+        <div class="absolute top-40 left-10 text-5xl sticker float-animation" style="animation-delay: 0s;">🍀</div>
+        <div class="absolute top-24 right-20 text-6xl sticker float-animation" style="animation-delay: 1s;">✨</div>
+        <div class="absolute bottom-10 left-1/4 text-4xl sticker float-animation" style="animation-delay: 2s;">✏️</div>
+        <div class="absolute top-1/2 right-10 text-5xl sticker float-animation" style="animation-delay: 0.5s;">💖</div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
+            <div class="inline-block px-5 py-2 rounded-full bg-white doodle-border text-[#FF7A00] font-bold mb-8 font-title text-lg transform -rotate-2">
+                Dear future artists,
+            </div>
+
+            <h1 class="text-5xl md:text-7xl font-title text-[#4A3A31] mb-6 leading-tight">
+                여러분의 레이어가 모여<br>
+                <span class="text-[#FF7A00]">하나의 그림</span>이 되는 곳
+            </h1>
+
+            <p class="text-xl md:text-2xl text-[#6B5A4D] mb-12 max-w-2xl mx-auto font-medium mt-4">
+                디지털 드로잉부터 아날로그 손그림까지 <i>actually!</i><br>
+                자유롭게 즐기는 2030 부산 오프라인 그림 모임
+            </p>
+
+            <div class="flex flex-col sm:flex-row justify-center gap-6 mt-10">
+                <a href="#contact" class="bg-[#FF7A00] text-white px-8 py-4 rounded-full font-title text-2xl doodle-button inline-flex items-center justify-center gap-2">
+                    I call dibs! (가입하기)
+                </a>
+                <a href="https://www.instagram.com/artlayers_busan" target="_blank" class="bg-white text-[#4A3A31] px-8 py-4 rounded-full font-title text-2xl doodle-button inline-flex items-center justify-center gap-2">
+                    <i class="fab fa-instagram text-[#FF7A00]"></i> 인스타 구경하기
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- About Section -->
+    <section id="about" class="py-20 bg-[#FDFBF7]">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="bg-[#FFF4E0] rounded-[3rem] p-8 md:p-16 doodle-border relative">
+                <!-- 장식 스티커 -->
+                <div class="absolute -top-6 -left-6 text-6xl transform -rotate-12">📌</div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+                    <div>
+                        <h2 class="text-4xl font-title text-[#4A3A31] mb-6 leading-relaxed">
+                            <span class="highlight-text text-[#FF7A00]">레이어스(Layers)</span>는<br>어떤 곳인가요?
+                        </h2>
+                        <div class="text-lg text-[#6B5A4D] space-y-6">
+                            <p>
+                                여러 가지의 레이어들이 함께하여 하나의 그림을 이루듯, 회원들이 단합을 이루고자 하여 지어진 이름입니다.<br>
+                                <span class="text-sm text-[#FF7A00] font-bold">(마법기사 레이어스 노린거 맞음 🤫)</span>
+                            </p>
+                            <p>
+                                부산에 거주하는 2030대들이 주축이 되며, 태블릿 <strong>디지털 드로잉</strong>부터 펜과 종이를 이용한 <strong>손그림</strong>까지 취향껏 자유롭게 참여 가능한 취미 공유 모임이에요!
+                            </p>
+
+                            <div class="bg-white p-5 rounded-2xl doodle-border mt-6 transform rotate-1">
+                                <div class="flex items-start gap-3">
+                                    <span class="text-2xl">⚠️</span>
+                                    <p class="text-[#4A3A31] font-bold leading-relaxed">
+                                        잠깐! 본 모임은 <span class="text-[#FF7A00]">오프라인 실명 친목모임</span>입니다.<br>
+                                        본인 이름 석 자 공개가 꺼려지시는 분은 사양합니다.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="relative w-full aspect-square bg-[#FFD166] rounded-full doodle-border overflow-hidden flex items-center justify-center">
+                        <!-- 귀여운 일러스트 느낌의 이미지 대체 -->
+                        <img src="https://images.unsplash.com/photo-1578306059880-9273c5fa4e67?q=80&w=2070&auto=format&fit=crop" alt="Color pencils" class="w-full h-full object-cover opacity-90 mix-blend-multiply">
+                        <div class="absolute inset-0 border-8 border-white rounded-full mix-blend-overlay"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Info Section (카드 디자인) -->
+    <section id="info" class="py-24 bg-[#F2F6ED]"> <!-- 따뜻한 연두색 배경 -->
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16 relative">
+                <span class="absolute top-0 right-1/4 text-4xl transform rotate-12">☁️</span>
+                <h2 class="text-4xl md:text-5xl font-title text-[#4A3A31] mb-4">정모는 이렇게 진행돼요!</h2>
+                <p class="text-xl text-[#6B5A4D]">It's kinda like magic paper 📝</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Info Card 1 -->
+                <div class="bg-white rounded-[2rem] p-8 doodle-border flex flex-col items-center text-center transform transition hover:-translate-y-2">
+                    <div class="text-6xl mb-6 mt-4">🗓️</div>
+                    <h3 class="text-2xl font-title text-[#4A3A31] mb-4">주 1회 정모 진행</h3>
+                    <p class="text-[#6B5A4D] text-lg leading-relaxed">
+                        일주일에 1번, 투표와 일정에 맞춰 유동적으로 진행돼요.<br>
+                        (※ 디스코드 모임은 출석으로 인정되지 않아요)
+                    </p>
+                </div>
+
+                <!-- Info Card 2 -->
+                <div class="bg-white rounded-[2rem] p-8 doodle-border flex flex-col items-center text-center transform transition hover:-translate-y-2 delay-100">
+                    <div class="text-6xl mb-6 mt-4">☕</div>
+                    <h3 class="text-2xl font-title text-[#4A3A31] mb-4">서면 인근 카페</h3>
+                    <p class="text-[#6B5A4D] text-lg leading-relaxed">
+                        주로 서면에서 저녁 7시부터 2시간 동안 모여요.<br>
+                        다양한 장소를 위해 인원수에 따라 변동될 수 있어요!
+                    </p>
+                </div>
+
+                <!-- Info Card 3 -->
+                <div class="bg-white rounded-[2rem] p-8 doodle-border flex flex-col items-center text-center transform transition hover:-translate-y-2 delay-200">
+                    <div class="text-6xl mb-6 mt-4">💳</div>
+                    <h3 class="text-2xl font-title text-[#4A3A31] mb-4">각자 부담 룰</h3>
+                    <p class="text-[#6B5A4D] text-lg leading-relaxed">
+                        별도의 정기 회비는 없습니다!<br>
+                        본인이 마실 카페 음료 비용만 각자 결제해주시면 끝!
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Rules Section (다이어리 노트 컨셉) -->
+    <section id="rules" class="py-24 bg-[#FDFBF7]">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="mb-12">
+                <h2 class="text-4xl md:text-5xl font-title text-[#4A3A31] mb-4">모임 필수 공지사항 📌</h2>
+                <p class="text-xl text-[#FF7A00] font-bold">함께하기 전 꼭! 읽어주세요.</p>
+            </div>
+
+            <!-- 노트 UI -->
+            <div class="bg-white rounded-xl doodle-border overflow-hidden relative shadow-lg">
+                <!-- 빨간 세로줄 (노트 디테일) -->
+                <div class="absolute left-8 md:left-12 top-0 bottom-0 w-0.5 bg-red-300 z-10 hidden sm:block"></div>
+
+                <div class="p-8 sm:pl-20 notebook-paper text-[#4A3A31] text-lg">
+
+                    <div class="mb-8 pt-2">
+                        <h4 class="font-title text-2xl text-[#FF7A00] bg-white inline-block pr-4 relative z-20">I. 장기 잠수 및 눈팅 금지</h4>
+                        <p class="mt-2 bg-white/80 inline-block">
+                            취미생활을 공유하기 위해 모인 만큼, 오랜 잠수 및 눈팅은 추방 사유가 됩니다. 오프라인 모임이므로 가입 후 바로 참여가 힘드신 분은 정중히 거절합니다.
+                        </p>
+                    </div>
+
+                    <div class="mb-8">
+                        <h4 class="font-title text-2xl text-[#22C55E] bg-white inline-block pr-4 relative z-20">II. 정모 참여 필수 룰</h4>
+                        <ul class="list-disc ml-6 mt-2 bg-white/80 inline-block w-full">
+                            <li><strong>첫 정모:</strong> 가입 후 2주 안에 무조건 참여 필수!</li>
+                            <li><strong>정기 참석:</strong> 추후 한 달에 한 번은 꼭 그림 정모에 참여해주세요.</li>
+                            <li>기약 없는 4번 이상의 미참석도 추방 사유가 됩니다.</li>
+                            <li class="text-[#FF7A00] font-bold text-base mt-1">(개인적인 현생 사유는 운영진에게 꼭 미리 말씀해주세요!)</li>
+                        </ul>
+                    </div>
+
+                    <div class="mb-8">
+                        <h4 class="font-title text-2xl text-[#3B82F6] bg-white inline-block pr-4 relative z-20">III. 투표 참여는 매너</h4>
+                        <p class="mt-2 bg-white/80 inline-block w-full">
+                            정모 일정은 투표로 진행됩니다. 참석/미참석 무투표 3회 누적 시 잠수 인원으로 간주되어 추방됩니다. 원활한 모임 운영을 위해 꼭 투표에 참여해주세요! <br>
+                            <span class="text-sm">(투표 카운팅은 1일 기준, 2달 단위로 리셋됩니다)</span>
+                        </p>
+                    </div>
+
+                    <div class="mb-4">
+                        <h4 class="font-title text-2xl text-[#EC4899] bg-white inline-block pr-4 relative z-20">IV. 실명제 & 깨끗한 매너</h4>
+                        <p class="mt-2 bg-white/80 inline-block w-full">
+                            서로간의 불편함이 없도록 채팅방은 <strong>익명이 아닌 실명제</strong>로 운영됩니다. 불쾌감을 주는 행동, 과도한 욕설, 비하 발언은 추방 사유입니다. 자기 얼굴에 침 뱉지 않는 다정한 매너 부탁드려요 :)
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-16 text-center transform -rotate-2">
+                <span class="bg-[#FFF4E0] px-6 py-3 rounded-2xl font-title text-2xl text-[#4A3A31] doodle-border inline-block shadow-md">
+                    "그림러들이 모여서 즐겁게 취미생활 하는 곳이니<br>부담없이 맘껏 즐겨주세요! 🎨"
+                </span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-24 bg-[#4A3A31] text-[#FDFBF7] relative overflow-hidden">
+        <!-- 배경 데코 -->
+        <div class="absolute right-0 bottom-0 opacity-10 text-9xl">📖</div>
+
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
+            <h2 class="text-4xl md:text-6xl font-title mb-12">Meet Layers!</h2>
+
+            <div class="flex flex-col md:flex-row justify-center items-stretch gap-8">
+
+                <!-- Contact Card -->
+                <div class="bg-[#FDFBF7] text-[#4A3A31] p-10 rounded-[2rem] doodle-border w-full md:w-1/2 flex flex-col justify-center transform transition hover:scale-105 origin-bottom-left">
+                    <h3 class="text-3xl font-title mb-2">모임장 하성은</h3>
+                    <p class="text-xl text-[#6B5A4D] mb-6 font-bold">010-6713-6366</p>
+                    <p class="text-lg bg-[#FFD166] inline-block px-4 py-1 rounded-full font-bold self-center mb-6">
+                        문자나 카톡으로 문의주세요!
+                    </p>
+                    <a href="tel:01067136366" class="w-full bg-[#4A3A31] text-white py-4 rounded-xl font-title text-xl doodle-button block text-center mt-auto">
+                        📞 전화/문자 보내기
+                    </a>
+                </div>
+
+                <!-- Instagram Card -->
+                <div class="bg-[#FF7A00] p-10 rounded-[2rem] doodle-border w-full md:w-1/2 flex flex-col justify-center transform transition hover:scale-105 origin-bottom-right">
+                    <div class="text-white text-5xl mb-4"><i class="fab fa-instagram"></i></div>
+                    <h3 class="text-3xl font-title text-white mb-4">공식 인스타그램</h3>
+                    <p class="text-[#FFF4E0] text-lg mb-8">
+                        멤버들의 즐거운 일상과<br> 멋진 그림들을 구경해보세요!
+                    </p>
+                    <a href="https://www.instagram.com/artlayers_busan" target="_blank" class="w-full bg-white text-[#FF7A00] py-4 rounded-xl font-title text-xl doodle-button block text-center mt-auto">
+                        @artlayers_busan 가기
+                    </a>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-[#3A2D25] text-[#9A8A7D] py-10 text-center font-title">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="text-3xl mb-2 text-[#FDFBF7]">LAYERS</div>
+            <p>부산 2030 오프라인 그림 친목 모임</p>
+            <p class="mt-4 text-sm font-sans">© 2026 Busan Art Club Layers. All rights reserved.</p>
+        </div>
+    </footer>
+
+</body>
+</html>
